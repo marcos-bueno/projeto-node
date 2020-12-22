@@ -1,17 +1,16 @@
 import { Router } from 'express';
 
-import CreateUserService from '../services/CreateUserService';
+import AuthenticateUserService from '../services/AuthenticateUserService';
 
-const usersRouter = Router();
+const sessionsRouter = Router();
 
-usersRouter.post('/', async (request, response) => {
+sessionsRouter.post('/', async (request, response) => {
   try {
-    const { name, email, password } = request.body;
+    const { email, password } = request.body;
 
-    const createUser = new CreateUserService();
+    const authenticateUser = new AuthenticateUserService();
 
-    const user = await createUser.execute({
-      name,
+    const { user } = await authenticateUser.execute({
       email,
       password,
     });
@@ -30,4 +29,4 @@ usersRouter.post('/', async (request, response) => {
   }
 });
 
-export default usersRouter;
+export default sessionsRouter;
